@@ -138,4 +138,4 @@ var objectKeys = keysOf( (payload.'$(root)' default {}) as Object) -- (arrayKeys
 ----
 ====
 
-image::images/dwplayground-button.png[DataWeave Playground, link=https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=AndyDaSilva52%2Fdataweave-scripts&path=scripts%2Fscripts/xmlToJsonDuplicateKeyAsArray]
+image::images/dwplayground-button.png[DataWeave Playground, link=https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=AndyDaSilva52%2Fdataweave-scripts&path=scripts%2FxmlToJsonDuplicateKeyAsArray]
