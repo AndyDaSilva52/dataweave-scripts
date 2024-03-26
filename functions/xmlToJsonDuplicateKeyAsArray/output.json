@@ -1,0 +1,35 @@
+{
+  About: {
+    Code: "29329573000145",
+    Name: "COMPANY X",
+    CodeStatus: "Ativa"
+  },
+  Emails: [
+    {
+      Email: "contact@company.com"
+    },
+    {
+      Email: "contact2@company.com"
+    }
+  ],
+  Phones: [
+    {
+      AreaCode: "19",
+      Phone: "34140000"
+    },
+    {
+      AreaCode: "19",
+      Phone: "34370005"
+    }
+  ],
+  Mobiles: [
+    {
+      AreaCode: "11",
+      Phone: "912341234"
+    },
+    {
+      AreaCode: "11",
+      Phone: "956785678"
+    }
+  ]
+}

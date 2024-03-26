@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+  <About>
+    <Code>29329573000145</Code>
+    <Name>COMPANY X</Name>
+    <CodeStatus>Ativa</CodeStatus>
+  </About>
+  <Emails>
+    <Email>contact@company.com</Email>
+  </Emails>
+  <Emails>
+    <Email>contact2@company.com</Email>
+  </Emails>
+  <Phones>
+    <AreaCode>19</AreaCode>
+    <Phone>34140000</Phone>
+  </Phones>
+  <Phones>
+    <AreaCode>19</AreaCode>
+    <Phone>34370005</Phone>
+  </Phones>
+  <Mobiles>
+    <AreaCode>11</AreaCode>
+    <Phone>912341234</Phone>
+  </Mobiles>
+  <Mobiles>
+    <AreaCode>11</AreaCode>
+    <Phone>956785678</Phone>
+  </Mobiles>
+</Root>

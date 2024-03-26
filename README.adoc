@@ -1,0 +1,43 @@
+:toc:
+:toc-placement!:
+:sectnums: |,all|
+toc::[]
+
+= DataWeave Scripts
+
+DataWeave is a powerful transformation language that is used to transform data from one format to another. It is a core component of MuleSoft Anypoint Platform.
+
+== Transform
+
+=== XML to JSON - Force Keys as Array
+:keywords: xml, json
+
+This script will convert an XML payload to a JSON payload. It will force keys to be arrays if there is only one element with that key since `duplicateKeyAsArray` only works when there are multiple elements with the same key.
+
+
+.Input XML Payload:
+[%collapsible]
+====
+[source,xml,linenums]
+----
+include::functions/xmlToJsonDuplicateKeyAsArray/inputs/payload.xml[]
+----
+====
+
+.DataWeave Script:
+[%collapsible]
+====
+[source,dataweave,linenums]
+----
+include::functions/xmlToJsonDuplicateKeyAsArray/transform.dwl[]
+----
+====
+
+.Output JSON Payload:
+[%collapsible]
+====
+[source,json,linenums]
+----
+include::functions/xmlToJsonDuplicateKeyAsArray/output.json[]
+----
+====
