@@ -20,7 +20,36 @@ This script will convert an XML payload to a JSON payload. It will force keys to
 ====
 [source,xml,linenums]
 ----
-include::functions/xmlToJsonDuplicateKeyAsArray/inputs/payload.xml[]
+<?xml version="1.0" encoding="UTF-8"?>
+<Root>
+  <About>
+    <Code>29329573000145</Code>
+    <Name>COMPANY X</Name>
+    <CodeStatus>Ativa</CodeStatus>
+  </About>
+  <Emails>
+    <Email>contact@company.com</Email>
+  </Emails>
+  <Emails>
+    <Email>contact2@company.com</Email>
+  </Emails>
+  <Phones>
+    <AreaCode>19</AreaCode>
+    <Phone>34140000</Phone>
+  </Phones>
+  <Phones>
+    <AreaCode>19</AreaCode>
+    <Phone>34370005</Phone>
+  </Phones>
+  <Mobiles>
+    <AreaCode>11</AreaCode>
+    <Phone>912341234</Phone>
+  </Mobiles>
+  <Mobiles>
+    <AreaCode>11</AreaCode>
+    <Phone>956785678</Phone>
+  </Mobiles>
+</Root>
 ----
 ====
 
@@ -29,7 +58,40 @@ include::functions/xmlToJsonDuplicateKeyAsArray/inputs/payload.xml[]
 ====
 [source,dataweave,linenums]
 ----
-include::functions/xmlToJsonDuplicateKeyAsArray/transform.dwl[]
+%dw 2.0
+var root = 'Root'
+var arrayKeys = ["Emails", "Phones", "Mobiles"]
+var objectKeys = keysOf( (payload.'$(root)' default {}) as Object) -- (arrayKeys)
+---
+{
+	(objectKeys map {
+		(($): ((payload.'$(root)'.'$($)' default {}) as Object mapObject ((value, key, index) ->
+        (key): (value match {
+            case is String -> (
+              if(trim(value) ~= "NULL") null else trim(value)
+            )
+            else -> value
+        })
+    )))
+	}),
+	(
+		arrayKeys map {
+		(
+			($): (
+				(payload.'$(root)'.*'$($)' default []) as Array map ((item, index) ->
+					item as Object mapObject ((value, key, index) ->
+						(key): (value match {
+                case is String -> (
+                  if(trim(value) ~= "NULL") null else trim(value)
+                )
+                else -> value
+            })
+					)
+				)
+			)
+		) if(payload.'$(root)'.'$($)'?)
+	})
+}
 ----
 ====
 
@@ -38,6 +100,42 @@ include::functions/xmlToJsonDuplicateKeyAsArray/transform.dwl[]
 ====
 [source,json,linenums]
 ----
-include::functions/xmlToJsonDuplicateKeyAsArray/output.json[]
+{
+  About: {
+    Code: "29329573000145",
+    Name: "COMPANY X",
+    CodeStatus: "Ativa"
+  },
+  Emails: [
+    {
+      Email: "contact@company.com"
+    },
+    {
+      Email: "contact2@company.com"
+    }
+  ],
+  Phones: [
+    {
+      AreaCode: "19",
+      Phone: "34140000"
+    },
+    {
+      AreaCode: "19",
+      Phone: "34370005"
+    }
+  ],
+  Mobiles: [
+    {
+      AreaCode: "11",
+      Phone: "912341234"
+    },
+    {
+      AreaCode: "11",
+      Phone: "956785678"
+    }
+  ]
+}
 ----
 ====
+
+image::images/dwplayground-button.png[DataWeave Playground, link=https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=AndyDaSilva52%2Fdataweave-scripts&path=scripts%2Fscripts/xmlToJsonDuplicateKeyAsArray]
