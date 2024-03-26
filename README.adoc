@@ -101,37 +101,37 @@ var objectKeys = keysOf( (payload.'$(root)' default {}) as Object) -- (arrayKeys
 [source,json,linenums]
 ----
 {
-  About: {
-    Code: "29329573000145",
-    Name: "COMPANY X",
-    CodeStatus: "Ativa"
+  "About": {
+    "Code": "29329573000145",
+    "Name": "COMPANY X",
+    "CodeStatus": "Ativa"
   },
-  Emails: [
+  "Emails": [
     {
-      Email: "contact@company.com"
+      "Email": "contact@company.com"
     },
     {
-      Email: "contact2@company.com"
+      "Email": "contact2@company.com"
     }
   ],
-  Phones: [
+  "Phones": [
     {
-      AreaCode: "19",
-      Phone: "34140000"
+      "AreaCode": "19",
+      "Phone": "34140000"
     },
     {
-      AreaCode: "19",
-      Phone: "34370005"
+      "AreaCode": "19",
+      "Phone": "34370005"
     }
   ],
-  Mobiles: [
+  "Mobiles": [
     {
-      AreaCode: "11",
-      Phone: "912341234"
+      "AreaCode": "11",
+      "Phone": "912341234"
     },
     {
-      AreaCode: "11",
-      Phone: "956785678"
+      "AreaCode": "11",
+      "Phone": "956785678"
     }
   ]
 }
