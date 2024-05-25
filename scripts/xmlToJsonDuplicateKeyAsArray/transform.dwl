@@ -1,4 +1,5 @@
 %dw 2.0
+output application/json
 var root = 'Root'
 var arrayKeys = ["Emails", "Phones", "Mobiles"]
 var objectKeys = keysOf( (payload.'$(root)' default {}) as Object) -- (arrayKeys)
