@@ -140,3 +140,94 @@ var objectKeys = keysOf( (payload.'$(root)' default {}) as Object) -- (arrayKeys
 ====
 
 image::images/dwplayground-button.png[DataWeave Playground, link=https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=AndyDaSilva52%2Fdataweave-scripts&path=scripts%2FxmlToJsonDuplicateKeyAsArray]
+
+
+
+
+
+=== XML to JSON - Mask Sensitive Data
+:keywords: xml, json
+
+This script will mask sensitive data in the XML text. It will use the `logger.dataMaskingFieldsCSV` property to define the fields that will be masked.
+
+.Input XML Payload:
+[%collapsible]
+====
+[source,xml,linenums]
+----
+<?xml version="1.0" encoding="WINDOWS-1252"?>
+<Root>
+  <Participant>
+    <AccountNumber>376400</AccountNumber>
+    <Name>JOHN</Name>
+    <PhoneNumber>+5500123451234</PhoneNumber>
+    <Email></Email>
+    <Id>1</Id>
+    <DocumentNumber>00000000000</DocumentNumber>
+  </Participant>
+</Root>
+----
+====
+
+.DataWeave Script:
+[%collapsible]
+====
+[source,dataweave,linenums]
+----
+%dw 2.0
+output application/json
+fun xmlTextMaskSensitiveData(xml, fields) = do {
+
+    (flatten(
+
+    fields map ((field, idx) ->
+
+				xml scan ("(\<$(field)\>)(.+)(\<\/$(field)\>)" as Regex) map ((found, index) ->
+
+					if(!isEmpty(found[2]))
+							{
+									o: "$(field)>"++ found[2] ++"</$(field)",
+									r: "$(field)>***</$(field)",
+							}
+					else
+					null
+
+				)
+
+			)
+
+    ) filter !isEmpty($) )
+
+    reduce ((texto, x = xml) ->
+      x
+        replace (texto.o as String)
+        with (texto.r as String)
+    )
+
+}
+---
+{
+    original: payload.XML,
+    masked: xmlTextMaskSensitiveData(payload.'XML', (Mule::p("logger.dataMaskingFieldsCSV") splitBy  ",") )
+}
+----
+====
+
+.Output JSON Payload:
+[%collapsible]
+====
+[source,json,linenums]
+----
+{
+  "original": "<?xml version=\"1.0\" encoding=\"WINDOWS-1252\"?><Root><Participant><AccountNumber>376400</AccountNumber><Name>JOHN</Name><PhoneNumber>+5500123451234</PhoneNumber><Email></Email><Id>1</Id><DocumentNumber>00000000000</DocumentNumber></Participant></Root>",
+  "masked": "<?xml version=\"1.0\" encoding=\"WINDOWS-1252\"?><Root><Participant><AccountNumber>376400</AccountNumber><Name>JOHN</Name><PhoneNumber>***</PhoneNumber><Email></Email><Id>1</Id><DocumentNumber>***</DocumentNumber></Participant></Root>"
+}
+----
+====
+
+image::images/dwplayground-button.png[DataWeave Playground, link=https://dataweave.mulesoft.com/learn/playground?projectMethod=GHRepo&repo=AndyDaSilva52%2Fdataweave-scripts&path=scripts%2FxmlTextMaskSensitiveData]
+
+
+
+
+
