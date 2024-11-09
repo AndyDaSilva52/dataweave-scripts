@@ -7,6 +7,8 @@ toc::[]
 
 DataWeave is a powerful transformation language that is used to transform data from one format to another. It is a core component of MuleSoft Anypoint Platform.
 
+link:https://www.prostdev.com/post/how-to-generate-shareable-link-examples-from-github-to-open-in-the-dataweave-playground[How to Generate Shareable Link Examples from GitHub to Open in the DataWeave Playground]
+
 == Transform
 
 === XML to JSON - Force Keys as Array
